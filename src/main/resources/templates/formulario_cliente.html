@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <form th:action="@{/Cliente/guardar}" method="post" th:object="${cliente}">
+    
+    <input type="hidden" th:field="*{id}">
+
+    <label>Nombres</label>
+    <input type="text" th:field="*{nombre}">
+    <br><br>
+
+    <label>Apellidos</label>
+    <input type="text" th:field="*{apellidos}">
+    <br><br>
+
+    <label>Tipo de documento</label>
+    <select th:field="*{tipo_documento}">
+        <option value="" disabled selected>-- Seleccione --</option>
+        <option value="DNI">DNI</option>
+        <option value="RUC">RUC</option>
+        <option value="PASAPORTE">Pasaporte</option>
+    </select>
+    <br><br>
+
+    <label>Numero de documento</label>
+    <input type="text" th:field="*{numero_documento}">
+    <br><br>
+
+    <label>Correo</label>
+    <input type="email" th:field="*{correo}">
+    <br><br>
+
+    <label>Telefono</label>
+    <input type="text" th:field="*{telefono}">
+    <br><br>
+
+    <label>Fecha de registro</label>
+    <input type="date" th:field="*{fecha_registro}">
+    <br><br>
+
+    <label>Estado</label>
+    <input type="checkbox" id="estadoActivo" value="activo" th:field="*{active}">
+    <label for="estadoActivo">Activo</label>
+    <br><br>
+
+    <button type="submit">Guardar Cliente</button>
+    <br><br>
+    <a th:href="@{/Cliente}">Regresar</a>
+
+</form>
+</body>
+</html>

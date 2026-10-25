@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Usuarios</title>
+</head>
+<body>
+    <h2>Lista de Usuarios</h2>
+    <a th:href="@{/Cliente/nuevo}">Agregar Cliente</a>
+    <table border="1">
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Acciones</th>
+        </tr>
+        <tr th:each="cliente:${ListaUsuarios}">
+            <td th:text="${cliente.id}"></td>
+            <td th:text="${cliente.nombre}"></td>
+            <td th:text="${cliente.correo}"></td>
+            <td>
+                <a th:href="@{/editar/{id}(id=${cliente.id})}">Editar</a>
+                <a th:href="@{/eliminar/{id}(id=${cliente.id})}">Eliminar</a>
+            </td>
+        </tr>
+    </table>
+    
+</body>
+</html>
