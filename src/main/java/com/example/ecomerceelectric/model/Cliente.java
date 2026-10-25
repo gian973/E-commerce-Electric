@@ -1,6 +1,8 @@
 package com.example.ecomerceelectric.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,10 +28,10 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column (nullable = false,length = 40) 
+    @Column (nullable = false,length = 100) 
     private String nombre;
 
-    @Column (nullable = false,length = 40)
+    @Column (nullable = false,length = 100)
     private String apellidos;
 
     @Column (nullable = false,length = 30)
@@ -38,21 +40,22 @@ public class Cliente {
     @Column (nullable = false,length = 14)
     private String numero_documento;
 
-    @Column (nullable = false,length = 30)
+    @Column (nullable = false,length = 100)
     private String correo;
 
     @Column (nullable = false,length = 30)
     private String telefono;
 
     @Column (nullable = false,updatable = false)
-    private LocalDateTime fecha_registro;
+    @DateTimeFormat (iso = DateTimeFormat.ISO.DATE)
+    private LocalDate fecha_registro;
 
     private boolean active;
 
     @PrePersist 
     private void antes(){
         if (fecha_registro==null) {
-            fecha_registro= LocalDateTime.now();
+            fecha_registro= LocalDate.now();
         }
     }
 

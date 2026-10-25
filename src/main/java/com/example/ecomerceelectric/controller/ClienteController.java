@@ -35,7 +35,7 @@ public class ClienteController {
         return "formulario_cliente";
    }
 
-   @PostMapping ("guardar")
+   @PostMapping ("/guardar")
     public String GuardarCliente(Cliente cliente) {
         clienteService.saveCliente(cliente);
         return "redirect:/Cliente";
