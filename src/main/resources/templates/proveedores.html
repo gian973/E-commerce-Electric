@@ -3,249 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ecommerce Electric | Gestión de Proveedores</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: #f1f5f9;
-            color: #334155;
-        }
-        .navbar-custom {
-            background-color: #0f172a;
-            border-bottom: 1px solid #1e293b;
-        }
-        .nav-link-custom {
-            color: #94a3b8 !important;
-            font-weight: 500;
-            padding: 0.5rem 0.9rem !important;
-            border-radius: 6px;
-            transition: all 0.2s ease;
-        }
-        .nav-link-custom:hover {
-            color: #ffffff !important;
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-        .nav-link-custom.active {
-            color: #38bdf8 !important;
-            background-color: rgba(56, 189, 248, 0.1);
-        }
-        .card-custom {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-        }
-        .table-custom thead th {
-            background-color: #f8fafc;
-            color: #475569;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-weight: 600;
-            border-bottom: 1px solid #e2e8f0;
-            padding: 0.85rem 1rem;
-        }
-        .table-custom tbody td {
-            padding: 0.9rem 1rem;
-            vertical-align: middle;
-            color: #1e293b;
-            border-bottom: 1px solid #f1f5f9;
-            font-size: 0.875rem;
-        }
-        .table-custom tbody tr:hover {
-            background-color: #f8fafc;
-        }
-        .badge-id {
-            background-color: #f1f5f9;
-            color: #475569;
-            font-weight: 600;
-            padding: 4px 8px;
-            border-radius: 6px;
-            border: 1px solid #e2e8f0;
-        }
-        .btn-brand {
-            background-color: #0284c7;
-            color: #fff;
-            font-weight: 500;
-        }
-        .btn-brand:hover {
-            background-color: #0369a1;
-            color: #fff;
-        }
-    </style> 
+    <title>Ecommerce Electric - Proveedores</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
 </head>
 <body>
 
-    <header class="navbar navbar-expand-lg navbar-custom sticky-top py-2 px-3">
-        <div class="container-fluid max-w-7xl">
-            <a class="navbar-brand d-flex align-items-center gap-2 text-white fw-bold fs-5 me-4" href="#">
-                <span class="d-inline-flex align-items-center justify-content-center bg-primary rounded px-2 py-1 text-white fs-6">
-                    <i class="bi bi-lightning-charge-fill"></i>
-                </span>
-                <span>Ecommerce<span class="text-primary-emphasis">Electric</span></span>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{/clientes}">
+                <span class="brand-icon"><i class="bi bi-lightning-charge-fill"></i></span>
+                Ecommerce<span class="brand-text-highlight">Electric</span>
             </a>
-            
-            <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-                <i class="bi bi-list"></i>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
             </button>
-
-            <div class="collapse navbar-collapse" id="navMenu">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-1">
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-custom" th:href="@{/clientes}" href="/clientes">
-                            <i class="bi bi-people me-1"></i> Clientes
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-custom" th:href="@{/categorias}" href="/categorias">
-                            <i class="bi bi-tags me-1"></i> Categorías
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-custom" th:href="@{/productos}" href="/productos">
-                            <i class="bi bi-box-seam me-1"></i> Productos
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-custom active" th:href="@{/proveedores}" href="/proveedores">
-                            <i class="bi bi-truck me-1"></i> Proveedores
-                        </a>
-                    </li>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto ms-3">
+                    <li class="nav-item"><a class="nav-link" th:href="@{/clientes}"><i class="bi bi-people"></i> Clientes</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/categorias}"><i class="bi bi-tags"></i> Categorías</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/productos}"><i class="bi bi-box-seam"></i> Productos</a></li>
+                    <li class="nav-item"><a class="nav-link active" th:href="@{/proveedores}"><i class="bi bi-truck"></i> Proveedores</a></li>
                 </ul>
             </div>
         </div>
-    </header>
+    </nav>
 
-    <main class="container py-4">
-
-        <div class="row align-items-center justify-content-between mb-4 gy-2">
-            <div class="col-auto">
+    <div class="container mt-4">
+        
+        <div class="d-flex justify-content-between align-items-end mb-4">
+            <div>
                 <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb mb-1 small text-muted">
+                    <ol class="breadcrumb">
                         <li class="breadcrumb-item">Módulos</li>
-                        <li class="breadcrumb-item active" aria-current="page">Proveedores</li>
+                        <li class="breadcrumb-item active">Proveedores</li>
                     </ol>
                 </nav>
-                <h3 class="fw-bold mb-0 text-slate-800">Directorio de Proveedores</h3>
+                <h3>Directorio de Proveedores</h3>
             </div>
-            <div class="col-auto">
-                <button class="btn btn-brand d-inline-flex align-items-center gap-2 px-3 shadow-sm" data-bs-toggle="modal" data-bs-target="#modalProveedor">
-                    <i class="bi bi-plus-circle-fill"></i>
-                    <span>Nuevo Proveedor</span>
-                </button>
-            </div>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#proveedores_modal_registro">
+                <i class="bi bi-plus-circle"></i> Nuevo Proveedor
+            </button>
         </div>
 
-        <div class="card card-custom mb-4">
-            <div class="card-body p-3">
-                <form th:action="@{/proveedores}" method="get" class="row g-2 align-items-center">
-                    <div class="col-md-4 col-sm-6">
-                        <div class="input-group">
-                            <span class="input-group-text bg-light text-muted border-end-0">
-                                <i class="bi bi-search"></i>
-                            </span>
-                            <input type="number" name="buscarId" th:value="${buscarId}" class="form-control border-start-0 ps-0" placeholder="Buscar por ID de proveedor...">
-                        </div>
+        <div class="card mb-4" id="proveedores_seccion_busqueda">
+            <div class="card-body">
+                <!-- Conecta con la tabla proveedores para buscar -->
+                <form id="proveedores_formulario_busqueda" th:action="@{/proveedores}" method="get">
+                    <div class="search-wrapper">
+                        <i class="bi bi-search"></i>
+                        <!-- Busca el ID en la base de datos -->
+                        <input type="number" id="proveedores_input_buscar_id" name="buscarId" th:value="${buscarId}" class="form-control" placeholder="Buscar por ID de proveedor...">
                     </div>
                 </form>
             </div>
         </div>
 
-        <div class="card card-custom">
-            <div class="card-header bg-white py-3 border-bottom border-light-subtle d-flex align-items-center">
-                <h6 class="fw-semibold mb-0 text-secondary">
-                    <i class="bi bi-table me-2 text-primary"></i>Proveedores 
-                </h6>
+        <div class="card" id="proveedores_seccion_tabla">
+            <div class="card-header">
+                <i class="bi bi-table text-primary me-2"></i> Registros Disponibles
             </div>
-            
             <div class="table-responsive">
-                <table class="table table-custom mb-0">
-                    <thead>
+                <table class="table table-hover mb-0" id="proveedores_tabla_listado">
+                    <thead class="table-light">
                         <tr>
-                            <th scope="col" style="width: 100px;">ID</th>
-                            <th scope="col">Razón Social / Proveedor</th>
-                            <th scope="col">RUC</th>
-                            <th scope="col">Correo</th>
-                            <th scope="col">Teléfono</th>
-                            <th scope="col" class="text-end" style="width: 140px;">Acciones</th>
+                            <th>ID</th>
+                            <th>RAZÓN SOCIAL</th>
+                            <th>RUC</th>
+                            <th>CORREO</th>
+                            <th>TELÉFONO</th>
+                            <th class="text-center">ACCIONES</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="pr : ${proveedores}">
-                            <td><span class="badge-id" th:text="'#' + ${pr.id}">#1</span></td>
-                            <td>
-                                <div class="fw-semibold text-dark" th:text="${pr.nombre}">Razón Social</div>
-                            </td>
-                            <td>
-                                <span class="badge-id small" th:text="${pr.ruc}">20000000000</span>
-                            </td>
-                            <td>
-                                <span class="text-muted" th:text="${pr.email}">proveedor@empresa.com</span>
-                            </td>
-                            <td>
-                                <span class="text-muted" th:text="${pr.telefono}">900000000</span>
-                            </td>
-                            <td class="text-end">
-                                <div class="btn-group btn-group-sm">
-                                    <a th:href="@{/proveedores/editar/{id}(id=${pr.id})}" class="btn btn-outline-secondary" title="Editar">
-                                        <i class="bi bi-pencil-square text-primary"></i>
-                                    </a>
-                                    <a th:href="@{/proveedores/eliminar/{id}(id=${pr.id})}" class="btn btn-outline-secondary" title="Eliminar" onclick="return confirm('¿Seguro que deseas eliminar este proveedor?')">
-                                        <i class="bi bi-trash3 text-danger"></i>
-                                    </a>
-                                </div>
+                        <!-- Muestra todos los registros de la tabla proveedores -->
+                        <tr th:each="pr : ${proveedores}" th:id="'proveedores_fila_' + ${pr.id}">
+                            <!-- Imprime los datos de las columnas de la BD -->
+                            <td th:text="${pr.id}"></td>
+                            <td th:text="${pr.nombre}"></td>
+                            <td th:text="${pr.ruc}"></td>
+                            <td th:text="${pr.email}"></td>
+                            <td th:text="${pr.telefono}"></td>
+                            <td class="text-center">
+                                <!-- Edita un registro en la tabla proveedores -->
+                                <a th:href="@{/proveedores/editar/{id}(id=${pr.id})}" class="btn btn-sm btn-outline-secondary border-0" title="Editar">
+                                    <i class="bi bi-pencil-square text-warning"></i>
+                                </a>
+                                <!-- Elimina un registro en la tabla proveedores -->
+                                <a th:href="@{/proveedores/eliminar/{id}(id=${pr.id})}" class="btn btn-sm btn-outline-secondary border-0" title="Eliminar" onclick="return confirm('¿Eliminar proveedor?')">
+                                    <i class="bi bi-trash text-danger"></i>
+                                </a>
                             </td>
                         </tr>
 
+                        <!-- Mensaje si la tabla proveedores está vacía -->
                         <tr th:if="${proveedores == null or #lists.isEmpty(proveedores)}">
-                            <td colspan="6" class="text-center py-5 text-muted">
-                                <i class="bi bi-inbox fs-3 d-block mb-2 text-secondary"></i>
-                                No se encontraron proveedores en el sistema.
+                            <td colspan="6" class="text-center py-5">
+                                <i class="bi bi-inbox empty-state-icon"></i>
+                                <span class="text-muted">No se encontraron proveedores registrados.</span>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
+    </div>
 
-    </main>
-
-    <div class="modal fade" id="modalProveedor" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 shadow">
-                <div class="modal-header bg-dark text-white py-3">
-                    <h6 class="modal-title fw-semibold">
-                        <i class="bi bi-truck me-2"></i>Registrar Nuevo Proveedor
-                    </h6>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+    <div class="modal fade" id="proveedores_modal_registro" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Registrar Proveedor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form th:action="@{/proveedores/guardar}" method="post">
-                    <div class="modal-body p-4">
+                <!-- Inserta un nuevo registro en la tabla proveedores -->
+                <form id="proveedores_formulario_registro" th:action="@{/proveedores/guardar}" method="post">
+                    <div class="modal-body">
                         <div class="mb-3">
-                            <label class="form-label small fw-semibold text-secondary">Razón Social</label>
-                            <input type="text" name="nombre" class="form-control" required placeholder="Ej: Distribuidora Eléctrica Lima SAC">
+                            <label for="proveedores_input_nombre" class="form-label">Razón Social</label>
+                            <!-- Guarda en la columna nombre de la BD -->
+                            <input type="text" id="proveedores_input_nombre" name="nombre" class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label small fw-semibold text-secondary">Número de RUC</label>
-                            <input type="text" name="ruc" class="form-control" required maxlength="11" placeholder="Ej: 20601234567">
+                            <label for="proveedores_input_ruc" class="form-label">RUC</label>
+                            <!-- Guarda en la columna ruc de la BD -->
+                            <input type="text" id="proveedores_input_ruc" name="ruc" class="form-control" maxlength="11" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label small fw-semibold text-secondary">Correo Electrónico</label>
-                            <input type="email" name="email" class="form-control" placeholder="ventas@proveedor.com">
+                            <label for="proveedores_input_email" class="form-label">Correo</label>
+                            <!-- Guarda en la columna email de la BD -->
+                            <input type="email" id="proveedores_input_email" name="email" class="form-control">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label small fw-semibold text-secondary">Teléfono de Contacto</label>
-                            <input type="text" name="telefono" class="form-control" placeholder="987654321">
+                            <label for="proveedores_input_telefono" class="form-label">Teléfono</label>
+                            <!-- Guarda en la columna telefono de la BD -->
+                            <input type="text" id="proveedores_input_telefono" name="telefono" class="form-control">
                         </div>
                     </div>
-                    <div class="modal-footer bg-light py-2">
-                        <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-brand btn-sm px-3">Guardar Registro</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" id="proveedores_btn_guardar" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
             </div>
