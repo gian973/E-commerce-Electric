@@ -12,7 +12,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" th:href="@{/clientes}">
+            <a class="navbar-brand" th:href="@{/Cliente}">
                 <span class="brand-icon"><i class="bi bi-lightning-charge-fill"></i></span>
                 Ecommerce<span class="brand-text-highlight">Electric</span>
             </a>
@@ -21,7 +21,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto ms-3">
-                    <li class="nav-item"><a class="nav-link" th:href="@{/clientes}"><i class="bi bi-people"></i> Clientes</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/Cliente}"><i class="bi bi-people"></i> Clientes</a></li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/categorias}"><i class="bi bi-tags"></i> Categorías</a></li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/productos}"><i class="bi bi-box-seam"></i> Productos</a></li>
                     <li class="nav-item"><a class="nav-link active" th:href="@{/proveedores}"><i class="bi bi-truck"></i> Proveedores</a></li>
@@ -81,9 +81,9 @@
                         <tr th:each="pr : ${proveedores}" th:id="'proveedores_fila_' + ${pr.id}">
                             <!-- Imprime los datos de las columnas de la BD -->
                             <td th:text="${pr.id}"></td>
-                            <td th:text="${pr.nombre}"></td>
+                            <td th:text="${pr.razon_social}"></td>
                             <td th:text="${pr.ruc}"></td>
-                            <td th:text="${pr.email}"></td>
+                            <td th:text="${pr.correo}"></td>
                             <td th:text="${pr.telefono}"></td>
                             <td class="text-center">
                                 <!-- Edita un registro en la tabla proveedores -->
@@ -91,9 +91,11 @@
                                     <i class="bi bi-pencil-square text-warning"></i>
                                 </a>
                                 <!-- Elimina un registro en la tabla proveedores -->
-                                <a th:href="@{/proveedores/eliminar/{id}(id=${pr.id})}" class="btn btn-sm btn-outline-secondary border-0" title="Eliminar" onclick="return confirm('¿Eliminar proveedor?')">
-                                    <i class="bi bi-trash text-danger"></i>
-                                </a>
+                                <form th:action="@{/proveedores/eliminar/{id}(id=${pr.id})}" method="post" class="d-inline" onsubmit="return confirm('¿Eliminar proveedor?')">
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary border-0" title="Eliminar">
+                                        <i class="bi bi-trash text-danger"></i>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
 
@@ -122,23 +124,32 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="proveedores_input_nombre" class="form-label">Razón Social</label>
-                            <!-- Guarda en la columna nombre de la BD -->
-                            <input type="text" id="proveedores_input_nombre" name="nombre" class="form-control" required>
+                            <input type="text" id="proveedores_input_nombre" name="razon_social" maxlength="200" class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label for="proveedores_input_ruc" class="form-label">RUC</label>
                             <!-- Guarda en la columna ruc de la BD -->
-                            <input type="text" id="proveedores_input_ruc" name="ruc" class="form-control" maxlength="11" required>
+                            <input type="text" id="proveedores_input_ruc" name="ruc" class="form-control" maxlength="40" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="proveedores_input_contacto" class="form-label">Nombre de contacto</label>
+                            <input type="text" id="proveedores_input_contacto" name="nombre_contacto" maxlength="30" class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label for="proveedores_input_email" class="form-label">Correo</label>
-                            <!-- Guarda en la columna email de la BD -->
-                            <input type="email" id="proveedores_input_email" name="email" class="form-control">
+                            <input type="email" id="proveedores_input_email" name="correo" maxlength="30" class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label for="proveedores_input_telefono" class="form-label">Teléfono</label>
-                            <!-- Guarda en la columna telefono de la BD -->
-                            <input type="text" id="proveedores_input_telefono" name="telefono" class="form-control">
+                            <input type="tel" id="proveedores_input_telefono" name="telefono" maxlength="30" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="proveedores_input_direccion" class="form-label">Dirección</label>
+                            <input type="text" id="proveedores_input_direccion" name="direccion" maxlength="30" class="form-control" required>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input type="checkbox" id="proveedores_input_activo" name="activo" value="true" class="form-check-input" checked>
+                            <label for="proveedores_input_activo" class="form-check-label">Activo</label>
                         </div>
                     </div>
                     <div class="modal-footer">

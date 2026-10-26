@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
@@ -27,7 +28,7 @@ public class ClienteController {
    @GetMapping()
    public String ListarClientes(Model model) {
         model.addAttribute("ListaUsuarios", clienteService.getAllClientes());
-        return "Lista";
+        return "clientes";
    }
    @GetMapping ("/nuevo")
    public String MostrarFormularioNuevoCliente(Model model) {
@@ -38,6 +39,12 @@ public class ClienteController {
    @PostMapping ("/guardar")
     public String GuardarCliente(Cliente cliente) {
         clienteService.saveCliente(cliente);
+        return "redirect:/Cliente";
+   }
+
+   @PostMapping ("/eliminar/{id}")
+     public String eliminarCliente(@PathVariable("id") Long id) {
+        clienteService.deleteCliente(id);
         return "redirect:/Cliente";
    }
 

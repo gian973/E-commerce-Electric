@@ -21,7 +21,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto ms-3">
-                    <li class="nav-item"><a class="nav-link active" th:href="@{/clientes}"><i class="bi bi-people"></i> Clientes</a></li>
+                    <li class="nav-item"><a class="nav-link active" th:href="@{/Cliente}"><i class="bi bi-people"></i> Clientes</a></li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/categorias}"><i class="bi bi-tags"></i> Categorías</a></li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/productos}"><i class="bi bi-box-seam"></i> Productos</a></li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/proveedores}"><i class="bi bi-truck"></i> Proveedores</a></li>
@@ -68,36 +68,46 @@
                 <table class="table table-hover mb-0" id="clientes_tabla_listado">
                     <thead class="table-light">
                         <tr>
-                            <th>ID</th>
-                            <th>NOMBRE COMERCIAL / TITULAR</th>
-                            <th>CORREO CORPORATIVO</th>
-                            <th>CONTACTO TELEFÓNICO</th>
+                            <th>Id</th>
+                            <th>Nombre</th>
+                            <th>Apellidos</th>
+                            <th>correo</th>
+                            <th>Fecha de Registro</th>
+                            <th>Tipo de Documento</th>
+                            <th>Número de Documento</th>
+                            <th>Telefono</th>
                             <th class="text-center">ACCIONES</th>
                         </tr>
                     </thead>
                     <tbody>
                         <!-- Muestra todos los registros de la tabla clientes -->
-                        <tr th:each="c : ${clientes}" th:id="'clientes_fila_' + ${c.id}">
+                        <tr th:each="cliente : ${ListaUsuarios}">
                             <!-- Imprime los datos de las columnas de la BD -->
-                            <td th:text="${c.id}"></td>
-                            <td th:text="${c.nombre}"></td>
-                            <td th:text="${c.email}"></td>
-                            <td th:text="${c.telefono}"></td>
+                            <td th:text="${cliente.id}"></td>
+                            <td th:text="${cliente.nombre}"></td>
+                            <td th:text="${cliente.apellidos}"></td>
+                            <td th:text="${cliente.correo}"></td>
+                            <td th:text="${cliente.fecha_registro}"></td>
+                            <td th:text="${cliente.tipo_documento}"></td>
+                            <td th:text="${cliente.numero_documento}"></td>
+                            <td th:text="${cliente.telefono}"></td>
                             <td class="text-center">
                                 <!-- Edita un registro en la tabla clientes -->
-                                <a th:href="@{/clientes/editar/{id}(id=${c.id})}" class="btn btn-sm btn-outline-secondary border-0" title="Editar">
+                                <a th:href="@{/editar/{id}(id=${cliente.id})}" class="btn btn-sm btn-outline-secondary border-0" title="Editar">
                                     <i class="bi bi-pencil-square text-warning"></i>
                                 </a>
                                 <!-- Elimina un registro en la tabla clientes -->
-                                <a th:href="@{/clientes/eliminar/{id}(id=${c.id})}" class="btn btn-sm btn-outline-secondary border-0" title="Eliminar" onclick="return confirm('¿Eliminar registro?')">
-                                    <i class="bi bi-trash text-danger"></i>
-                                </a>
+                                <form th:action="@{/Cliente/eliminar/{id}(id=${cliente.id})}" method="post" class="d-inline" onsubmit="return confirm('¿Eliminar registro?')">
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary border-0" title="Eliminar">
+                                        <i class="bi bi-trash text-danger"></i>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
 
                         <!-- Mensaje si la tabla clientes está vacía -->
-                        <tr th:if="${clientes == null or #lists.isEmpty(clientes)}">
-                            <td colspan="5" class="text-center py-5">
+                        <tr th:if="${ListaUsuarios == null or #lists.isEmpty(ListaUsuarios)}">
+                            <td colspan="9" class="text-center py-5">
                                 <i class="bi bi-inbox empty-state-icon"></i>
                                 <span class="text-muted">No se encontraron registros en el sistema.</span>
                             </td>
@@ -116,22 +126,45 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <!-- Inserta un nuevo registro en la tabla clientes -->
-                <form id="clientes_formulario_registro" th:action="@{/clientes/guardar}" method="post">
+                <form id="clientes_formulario_registro" th:action="@{/Cliente/guardar}" method="post">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="clientes_input_nombre" class="form-label">Nombre</label>
-                            <!-- Guarda en la columna nombre de la BD -->
-                            <input type="text" id="clientes_input_nombre" name="nombre" class="form-control" required>
+                            <input type="text" id="clientes_input_nombre" name="nombre" class="form-control" maxlength="100" required>
                         </div>
                         <div class="mb-3">
-                            <label for="clientes_input_email" class="form-label">Correo</label>
-                            <!-- Guarda en la columna email de la BD -->
-                            <input type="email" id="clientes_input_email" name="email" class="form-control">
+                            <label for="clientes_input_apellidos" class="form-label">Apellidos</label>
+                            <input type="text" id="clientes_input_apellidos" name="apellidos" class="form-control" maxlength="100" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="clientes_input_tipo_documento" class="form-label">Tipo de documento</label>
+                            <select id="clientes_input_tipo_documento" name="tipo_documento" class="form-select" required>
+                                <option value="" disabled selected>-- Seleccione --</option>
+                                <option value="DNI">DNI</option>
+                                <option value="RUC">RUC</option>
+                                <option value="PASAPORTE">Pasaporte</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="clientes_input_numero_documento" class="form-label">Número de documento</label>
+                            <input type="text" id="clientes_input_numero_documento" name="numero_documento" class="form-control" maxlength="14" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="clientes_input_correo" class="form-label">Correo</label>
+                            <input type="email" id="clientes_input_correo" name="correo" class="form-control" maxlength="100" required>
                         </div>
                         <div class="mb-3">
                             <label for="clientes_input_telefono" class="form-label">Teléfono</label>
-                            <!-- Guarda en la columna telefono de la BD -->
-                            <input type="text" id="clientes_input_telefono" name="telefono" class="form-control">
+                            <input type="tel" id="clientes_input_telefono" name="telefono" class="form-control" maxlength="30" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="clientes_input_fecha_registro" class="form-label">Fecha de registro</label>
+                            <input type="date" id="clientes_input_fecha_registro" name="fecha_registro" class="form-control">
+                            <div class="form-text">Si no se indica, se asignará la fecha actual.</div>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" id="clientes_input_active" name="active" value="true" class="form-check-input">
+                            <label for="clientes_input_active" class="form-check-label">Activo</label>
                         </div>
                     </div>
                     <div class="modal-footer">

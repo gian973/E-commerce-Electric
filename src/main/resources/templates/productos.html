@@ -12,7 +12,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" th:href="@{/clientes}">
+            <a class="navbar-brand" th:href="@{/Cliente}">
                 <span class="brand-icon"><i class="bi bi-lightning-charge-fill"></i></span>
                 Ecommerce<span class="brand-text-highlight">Electric</span>
             </a>
@@ -21,7 +21,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto ms-3">
-                    <li class="nav-item"><a class="nav-link" th:href="@{/clientes}"><i class="bi bi-people"></i> Clientes</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/Cliente}"><i class="bi bi-people"></i> Clientes</a></li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/categorias}"><i class="bi bi-tags"></i> Categorías</a></li>
                     <li class="nav-item"><a class="nav-link active" th:href="@{/productos}"><i class="bi bi-box-seam"></i> Productos</a></li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/proveedores}"><i class="bi bi-truck"></i> Proveedores</a></li>
@@ -71,7 +71,7 @@
                             <th>ID</th>
                             <th>NOMBRE DEL PRODUCTO</th>
                             <th>PRECIO (S/)</th>
-                            <th class="text-center">STOCK</th>
+                            <th>CÓDIGO SKU</th>
                             <th class="text-center">ESTADO</th>
                             <th class="text-center">ACCIONES</th>
                         </tr>
@@ -83,17 +83,19 @@
                             <td th:text="${p.id}"></td>
                             <td th:text="${p.nombre}"></td>
                             <td th:text="${p.precio}"></td>
-                            <td class="text-center" th:text="${p.stock}"></td>
-                            <td class="text-center" th:text="${p.estado != null ? p.estado : 'ACTIVO'}"></td>
+                            <td th:text="${p.codigoSku}"></td>
+                            <td class="text-center" th:text="${p.active ? 'ACTIVO' : 'INACTIVO'}"></td>
                             <td class="text-center">
                                 <!-- Edita un registro en la tabla productos -->
                                 <a th:href="@{/productos/editar/{id}(id=${p.id})}" class="btn btn-sm btn-outline-secondary border-0" title="Editar">
                                     <i class="bi bi-pencil-square text-warning"></i>
                                 </a>
                                 <!-- Elimina un registro en la tabla productos -->
-                                <a th:href="@{/productos/eliminar/{id}(id=${p.id})}" class="btn btn-sm btn-outline-secondary border-0" title="Eliminar" onclick="return confirm('¿Eliminar producto?')">
-                                    <i class="bi bi-trash text-danger"></i>
-                                </a>
+                                <form th:action="@{/productos/eliminar/{id}(id=${p.id})}" method="post" class="d-inline" onsubmit="return confirm('¿Eliminar producto?')">
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary border-0" title="Eliminar">
+                                        <i class="bi bi-trash text-danger"></i>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
 
@@ -123,27 +125,30 @@
                         <div class="mb-3">
                             <label for="productos_input_nombre" class="form-label">Nombre del Producto</label>
                             <!-- Guarda en la columna nombre de la BD -->
-                            <input type="text" id="productos_input_nombre" name="nombre" class="form-control" required>
+                            <input type="text" id="productos_input_nombre" name="nombre" maxlength="40" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="productos_textarea_descripcion" class="form-label">Descripción</label>
+                            <textarea id="productos_textarea_descripcion" name="descripcion" maxlength="200" class="form-control" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="productos_input_sku" class="form-label">Código SKU</label>
+                            <input type="text" id="productos_input_sku" name="codigoSku" maxlength="20" class="form-control" required>
                         </div>
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="productos_input_precio" class="form-label">Precio (S/)</label>
                                 <!-- Guarda en la columna precio de la BD -->
-                                <input type="number" step="0.01" id="productos_input_precio" name="precio" class="form-control" required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="productos_input_stock" class="form-label">Stock</label>
-                                <!-- Guarda en la columna stock de la BD -->
-                                <input type="number" id="productos_input_stock" name="stock" class="form-control" required>
+                                <input type="number" min="0" step="0.01" id="productos_input_precio" name="precio" class="form-control" required>
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="productos_select_estado" class="form-label">Estado</label>
-                            <!-- Guarda en la columna estado de la BD -->
-                            <select id="productos_select_estado" name="estado" class="form-select">
-                                <option value="ACTIVO">Activo</option>
-                                <option value="INACTIVO">Inactivo</option>
-                            </select>
+                            <label for="productos_input_imagen" class="form-label">URL de imagen</label>
+                            <input type="url" id="productos_input_imagen" name="imagenUrl" class="form-control" required>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input type="checkbox" id="productos_select_estado" name="active" value="true" class="form-check-input" checked>
+                            <label for="productos_select_estado" class="form-check-label">Activo</label>
                         </div>
                     </div>
                     <div class="modal-footer">

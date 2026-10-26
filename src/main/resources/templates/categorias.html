@@ -12,7 +12,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" th:href="@{/clientes}">
+            <a class="navbar-brand" th:href="@{/Cliente}">
                 <span class="brand-icon"><i class="bi bi-lightning-charge-fill"></i></span>
                 Ecommerce<span class="brand-text-highlight">Electric</span>
             </a>
@@ -21,7 +21,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto ms-3">
-                    <li class="nav-item"><a class="nav-link" th:href="@{/clientes}"><i class="bi bi-people"></i> Clientes</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/Cliente}"><i class="bi bi-people"></i> Clientes</a></li>
                     <li class="nav-item"><a class="nav-link active" th:href="@{/categorias}"><i class="bi bi-tags"></i> Categorías</a></li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/productos}"><i class="bi bi-box-seam"></i> Productos</a></li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/proveedores}"><i class="bi bi-truck"></i> Proveedores</a></li>
@@ -82,16 +82,18 @@
                             <td th:text="${cat.id}"></td>
                             <td th:text="${cat.nombre}"></td>
                             <td th:text="${cat.descripcion}"></td>
-                            <td class="text-center" th:text="${cat.estado != null ? cat.estado : 'ACTIVO'}"></td>
+                            <td class="text-center" th:text="${cat.active ? 'ACTIVO' : 'INACTIVO'}"></td>
                             <td class="text-center">
                                 <!-- Edita un registro en la tabla categorias -->
                                 <a th:href="@{/categorias/editar/{id}(id=${cat.id})}" class="btn btn-sm btn-outline-secondary border-0" title="Editar">
                                     <i class="bi bi-pencil-square text-warning"></i>
                                 </a>
                                 <!-- Elimina un registro en la tabla categorias -->
-                                <a th:href="@{/categorias/eliminar/{id}(id=${cat.id})}" class="btn btn-sm btn-outline-secondary border-0" title="Eliminar" onclick="return confirm('¿Eliminar categoría?')">
-                                    <i class="bi bi-trash text-danger"></i>
-                                </a>
+                                <form th:action="@{/categorias/eliminar/{id}(id=${cat.id})}" method="post" class="d-inline" onsubmit="return confirm('¿Eliminar categoría?')">
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary border-0" title="Eliminar">
+                                        <i class="bi bi-trash text-danger"></i>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
 
@@ -121,20 +123,19 @@
                         <div class="mb-3">
                             <label for="categorias_input_nombre" class="form-label">Nombre de Categoría</label>
                             <!-- Guarda en la columna nombre de la BD -->
-                            <input type="text" id="categorias_input_nombre" name="nombre" class="form-control" required>
+                            <input type="text" id="categorias_input_nombre" name="nombre" maxlength="40" class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label for="categorias_textarea_descripcion" class="form-label">Descripción</label>
                             <!-- Guarda en la columna descripcion de la BD -->
-                            <textarea id="categorias_textarea_descripcion" name="descripcion" class="form-control" rows="3"></textarea>
+                            <textarea id="categorias_textarea_descripcion" name="descripcion" class="form-control" rows="3" maxlength="200" required></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="categorias_select_estado" class="form-label">Estado</label>
-                            <!-- Guarda en la columna estado de la BD -->
-                            <select id="categorias_select_estado" name="estado" class="form-select">
-                                <option value="ACTIVO">Activo</option>
-                                <option value="INACTIVO">Inactivo</option>
-                            </select>
+                            <div class="form-check">
+                                <input type="checkbox" id="categorias_select_estado" name="active" value="true" class="form-check-input" checked>
+                                <label for="categorias_select_estado" class="form-check-label">Activa</label>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
